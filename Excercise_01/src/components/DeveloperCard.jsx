@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import styles from './DeveloperCard.module.css'
 
 export function DeveloperCard({
@@ -21,11 +22,16 @@ export function DeveloperCard({
     <article className={styles.card} aria-label={`${fullName} profile`}>
       <img src={avatarUrl} alt={fullName} width="64" height="64" />
       <p>{fullName} — {role}</p>
-      <p>
-        Commits: {metrics.commits} |
-        VDOM Nodes: {metrics.vdomNodes} |
-        A11y Score: {metrics.a11yScore}
-      </p>
+     
+<dl className={styles.metrics}>
+  {Object.entries(metrics).map(([k, v]) => (
+    <Fragment key={k}>
+      <dt>{k}</dt>
+      <dd>{v}</dd>
+    </Fragment>
+  ))}
+</dl>
+
       <p>Skills: {skills.map(skill => skill.name).join(', ')}</p>
     </article>
   )
