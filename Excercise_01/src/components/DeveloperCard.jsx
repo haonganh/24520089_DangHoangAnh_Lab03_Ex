@@ -1,3 +1,4 @@
+import { SkillBadge } from './SkillBadge'
 import { Fragment } from 'react'
 import styles from './DeveloperCard.module.css'
 
@@ -33,13 +34,17 @@ export function DeveloperCard({
 </dl>
 
      
+
 <ul className={styles.skills} aria-label="Engineered Skills">
   {skills.map((s) => (
-    <li key={s.id}>
-      {s.name} ({s.tier})
-    </li>
+    <SkillBadge
+      key={s.id}
+      name={s.name}
+      tier={s.tier}
+    />
   ))}
 </ul>
+
 
     </article>
   )
