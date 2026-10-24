@@ -1,11 +1,12 @@
-import { SkillBadge } from './SkillBadge'
+
 import { Fragment } from 'react'
+import { SkillBadge } from './SkillBadge'
 import styles from './DeveloperCard.module.css'
 
 export function DeveloperCard({
   fullName = 'Tran Vinh Khiem',
   role = 'Senior Systems Architect • UIT S3T',
-  avatarUrl = 'https://images.unsplash.com/photo-1534528741775-53994a69eda?w=240',
+  avatarUrl = '/avatar.svg',
   metrics = {
     commits: 512,
     vdomNodes: 0,
@@ -20,32 +21,43 @@ export function DeveloperCard({
   ]
 } = {}) {
   return (
-    <article className={styles.card} aria-label={`${fullName} profile`}>
-      <img src={avatarUrl} alt={fullName} width="64" height="64" />
-      <p>{fullName} — {role}</p>
-     
-<dl className={styles.metrics}>
-  {Object.entries(metrics).map(([k, v]) => (
-    <Fragment key={k}>
-      <dt>{k}</dt>
-      <dd>{v}</dd>
-    </Fragment>
-  ))}
-</dl>
+    <article
+      className={styles.card}
+      aria-labelledby="dev-heading"
+    >
+      <header className={styles.header}>
+        <img
+          src={avatarUrl}
+          alt={fullName}
+          width="64"
+          height="64"
+        />
 
-     
+        <h2 id="dev-heading">{fullName}</h2>
+        <p>{role}</p>
+      </header>
 
-<ul className={styles.skills} aria-label="Engineered Skills">
-  {skills.map((s) => (
-    <SkillBadge
-      key={s.id}
-      name={s.name}
-      tier={s.tier}
-    />
-  ))}
-</ul>
+      <dl className={styles.metrics}>
+        {Object.entries(metrics).map(([k, v]) => (
+          <Fragment key={k}>
+            <dt>{k}</dt>
+            <dd>{v}</dd>
+          </Fragment>
+        ))}
+      </dl>
 
-
+      <ul
+        className={styles.skills}
+        aria-label="Engineered Skills"
+      >
+        {skills.map((s) => (
+          <SkillBadge
+            key={s.id}
+            name={s.name}
+            tier={s.tier}
+          />
+        ))}
+      </ul>
     </article>
   )
 }
