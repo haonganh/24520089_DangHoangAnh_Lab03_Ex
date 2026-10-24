@@ -1,5 +1,5 @@
 
-import { Fragment } from 'react'
+import { Fragment, useId } from 'react'
 import { SkillBadge } from './SkillBadge'
 import styles from './DeveloperCard.module.css'
 
@@ -20,10 +20,11 @@ export function DeveloperCard({
     }
   ]
 } = {}) {
+    const headingId = useId()
   return (
     <article
       className={styles.card}
-      aria-labelledby="dev-heading"
+  aria-labelledby={headingId}
     >
       <header className={styles.header}>
         <img
@@ -33,7 +34,7 @@ export function DeveloperCard({
           height="64"
         />
 
-        <h2 id="dev-heading">{fullName}</h2>
+        <h2 id={headingId}>{fullName}</h2>
         <p>{role}</p>
       </header>
 
