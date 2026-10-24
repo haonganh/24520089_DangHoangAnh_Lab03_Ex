@@ -32,7 +32,15 @@ export function DeveloperCard({
   ))}
 </dl>
 
-      <p>Skills: {skills.map(skill => skill.name).join(', ')}</p>
+     
+<ul className={styles.skills} aria-label="Engineered Skills">
+  {skills.map((s) => (
+    <li key={s.id}>
+      {s.name} ({s.tier})
+    </li>
+  ))}
+</ul>
+
     </article>
   )
 }
