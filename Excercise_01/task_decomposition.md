@@ -409,7 +409,7 @@ git commit -m "docs(ex1): finalize instructions and verification evidence"
 | T3: Metrics | Three `dt`/`dd` pairs; `0` visible; no key warning | Not tested yet | Pending |
 | T4: Skills | `ul`/`li`, stable keys, optional `SkillBadge` tree | Not tested yet | Pending |
 | T5: CSS and responsive | Module styles, contrast/reflow/spacing verified | Not tested yet | Pending |
-| T7: React DevTools | `App` → `DeveloperCard` → `SkillBadge` | Not tested yet | Pending |
+| | T7: React DevTools | `App` → `DeveloperCard` → `SkillBadge` | Verified component tree, stable keys, rendered defaults, and SkillBadge props on 2026-10-24 | Pass |
 | T7: DOM and console | Zero `<div>` inside card; no React warnings | Not tested yet | Pending |
 | T8: Manual WCAG audit | Applicable Level A and AA criteria checked | Not tested yet | Pending |
 | T8: Automated scan | Findings documented and addressed | Not tested yet | Pending |
