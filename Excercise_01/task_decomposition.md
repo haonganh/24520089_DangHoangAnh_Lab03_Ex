@@ -412,7 +412,7 @@ git commit -m "docs(ex1): finalize instructions and verification evidence"
 | | T7: React DevTools | `App` → `DeveloperCard` → `SkillBadge` | Verified component tree, stable keys, rendered defaults, and SkillBadge props on 2026-10-24 | Pass |
 | T7: DOM and console | Zero `<div>` inside card; no React warnings | DOM checks passed: 0 divs, valid aria-labelledby, 3 metrics, 1 skill, no React warnings (2026-10-24) | Pass |
 | T8: Manual WCAG audit | Applicable Level A and AA criteria checked | Not tested yet | Pending |
-| T8: Automated scan | Findings documented and addressed | Not tested yet | Pending |
+| T8: Automated scan | Findings documented and addressed | axe DevTools: 0 violations; manual review completed | Pass |
 | T9: Lint and build | Commands pass (where scripts exist) | Not tested yet | Pending |
 | T9: GitHub | Branch pushed; files and history visible | Not tested yet | Pending |
 
