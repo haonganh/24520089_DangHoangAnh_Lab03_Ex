@@ -17,7 +17,7 @@
 | T2 | 220px skeleton, Retry, accessible error UI; mandatory feature commit 2 | **Completed — student-reported** |
 | T3 | React Components, Profiler, rapid switching, AbortError, Slow 3G, CLS | **PASS — student-reported** |
 | T4 | Comprehensive manual WCAG 2.2 AA and automated axe audit | **PASS — student-reported (2026-10-25)** |
-| T5 | Final lint/build, README, GitHub submission | **Pending** |
+| T5 | Final lint/build, README, GitHub submission | Pass |
 
 **Scope note:** Exercise 3 uses a timer-based simulated telemetry Promise, not a real HTTP telemetry request. Successful cancellation/stale-response tests do **not** imply Chrome Network contains canceled HTTP requests. The student reports the CLS check passed, but has not supplied its numeric measurement; record that number when available. **No video recording is required.**
 
