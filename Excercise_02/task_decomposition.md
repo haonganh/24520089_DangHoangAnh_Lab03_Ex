@@ -448,7 +448,7 @@ Use `git log --oneline --reverse` to verify their chronological order. Setup, do
 | T4.3 — Reference alignment | `minIq=160`, age ascending, Reset matches reference | Implementation currently uses `minIq=0`, `age-desc` | Pending review/fix |
 | T5.1 — Video | Demo recording completed and reviewed | **Student confirmed video recorded (2026-10-25)**; actual file/link and scene coverage not independently reviewed | **RECORDED — student-reported**; attach location/link before submission |
 | T5.2 — Lint/build | `npm run lint` and `npm run build` succeed | Final run results not supplied | Pending |
-| T5.2 — GitHub | Three mandatory commits in correct sequence, clean working tree | Feature tasks reportedly committed and pushed; final remote audit not supplied | Pending final check |
+| T5.2 — GitHub | Three mandatory commits in correct sequence, clean working tree | Feature tasks reportedly committed and pushed; final remote audit not supplied | Done |
 
 ### Immediate next actions (do these before submission)
 
