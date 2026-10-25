@@ -6,7 +6,20 @@
 **Workflow:** Step-by-step implementation → test → atomic Git commit → push at the end of each major task  
 **Video recording:** **NOT REQUIRED** for Exercise 3.
 
-> **Assignment source:** Sprint 3 specification and reference-contract slides supplied by the instructor. The two required feature commits are preserved verbatim below. Do not mark a test **PASS** until it has actually been performed.
+> **Assignment source:** Sprint 3 specification and reference-contract slides supplied by the instructor. The two required feature commits are preserved verbatim below. Test results marked **PASS** below are based on the student’s confirmation on **2026-10-25**; values not supplied by the student are not invented.
+
+## Current progress (updated 2026-10-25)
+
+| Task | Scope | Status |
+|---|---|---|
+| T0 | Setup and Markdown documentation | **Completed — student-reported** |
+| T1 | Dataset, four-state lifecycle, AbortController; mandatory feature commit 1 | **Completed — student-reported** |
+| T2 | 220px skeleton, Retry, accessible error UI; mandatory feature commit 2 | **Completed — student-reported** |
+| T3 | React Components, Profiler, rapid switching, AbortError, Slow 3G, CLS | **PASS — student-reported** |
+| T4 | Comprehensive manual WCAG 2.2 AA and automated axe audit | **Pending** |
+| T5 | Final lint/build, README, GitHub submission | **Pending** |
+
+**Scope note:** Exercise 3 uses a timer-based simulated telemetry Promise, not a real HTTP telemetry request. Successful cancellation/stale-response tests do **not** imply Chrome Network contains canceled HTTP requests. The student reports the CLS check passed, but has not supplied its numeric measurement; record that number when available. **No video recording is required.**
 
 ## 1. Assignment contract and acceptance criteria
 
@@ -141,22 +154,22 @@ git commit -m "feat(ex3): add skeleton UI & retry alert"
 
 **T3.1 — Network Slow 3G, cancellation and stale-response test**
 
-- [ ] Open Chrome DevTools → **Network**, enable **Slow 3G**, and clear the log.
-- [ ] Reload. Confirm LOADING and a reserved skeleton; inspect whether a network request is observable **for the chosen mock implementation**.
-- [ ] Click **CES → TE → GE** rapidly (while previous work is pending).
-- [ ] Confirm last selected squad is GE, outdated results are absent, and cancellation does not show the ERROR banner.
-- [ ] If actual HTTP fetches are in flight, inspect *canceled* entries in Network. If using Promise/timer simulation, verify signal cancellation with instrumentation and document that no HTTP cancellation entries are expected.
-- [ ] Open **Performance**, measure CLS; target **0.00** for the skeleton transition, report the **measured** number and correct shifts if necessary.
+- [x] Open Chrome DevTools → **Network**, enable **Slow 3G**, and clear the log.
+- [x] Reload. Confirm LOADING and a reserved skeleton; inspect whether a network request is observable **for the chosen mock implementation**.
+- [x] Click **CES → TE → GE** rapidly (while previous work is pending).
+- [x] Confirm last selected squad is GE, outdated results are absent, and cancellation does not show the ERROR banner.
+- [x] **Timer-based mock:** No HTTP request cancellation entries expected in Network; cancellation and stale responses were checked via app/React state behavior. **HTTP Network cancellation: N/A.**
+- [x] Check CLS during the skeleton transition: **PASS (student-reported)**; numeric CLS measurement **not provided**. Do not record `0.00` or any other value without actual evidence.
 
 **T3.2 — React Developer Tools (Components and Profiler)**
 
-- [ ] Open React Developer Tools → **Components**; inspect `App`, the selector, and `PubgMatchTelemetry`.
-- [ ] Verify default `squadId='te'`, then props update to `ces`, `te`, `ge` on user selection.
-- [ ] Verify `view.status` transitions `IDLE` (initial state) → `LOADING` → `SUCCESS` or `ERROR`; inspect `retryTick` increment on Retry.
-- [ ] Use **Profiler** to record a squad change, an error and Retry; inspect actual commits and make sure there is no persistent render/effect loop. Do not assume a fixed render count under React StrictMode.
-- [ ] Inspect **Console** for React warnings, uncaught rejected promises, and errors caused by aborted requests.
-- [ ] If taking evidence screenshots, store them under `evidence/`; **no video required**.
-- [ ] Update Section 5 evidence log with observations; make a test/documentation commit:
+- [x] Open React Developer Tools → **Components**; inspect `App`, the selector, and `PubgMatchTelemetry`.
+- [x] Verify default `squadId='te'`, then props update to `ces`, `te`, `ge` on user selection.
+- [x] Verify `view.status` transitions `IDLE` (initial state) → `LOADING` → `SUCCESS` or `ERROR`; inspect `retryTick` increment on Retry.
+- [x] Use **Profiler** to record a squad change, an error and Retry; inspect actual commits and make sure there is no persistent render/effect loop. Do not assume a fixed render count under React StrictMode.
+- [x] Inspect **Console** for React warnings, uncaught rejected promises, and errors caused by aborted requests.
+- [ ] Optional: save DevTools evidence screenshots under `evidence/`; **no video required**. Screenshots are not yet provided.
+- [x] Update Section 5 evidence log with student-reported observations. After replacing this file in the project, make the test/documentation commit:
 
 ```bash
 git add task_decomposition.md
@@ -216,43 +229,52 @@ git commit -m "docs(ex3): finalize telemetry validation and submission"
 - [ ] Ensure `nothing to commit, working tree clean` and no unpushed commits.
 - [ ] **Do not add a video**. Exercise 3 submission is source, docs, and real test evidence only.
 
-## 4. Test matrix
+## 4. Test matrix (updated 2026-10-25)
 
-| Test ID | Action | Expected outcome | Status |
-|---|---|---|---|
-| EX3-01 | Open app with default squad | TE telemetry initiates; four-state lifecycle behaves correctly | Pending |
-| EX3-02 | Select CES | CES data; no TE stale result | Pending |
-| EX3-03 | Select TE, then GE rapidly | GE wins; older asynchronous work canceled/ignored | Pending |
-| EX3-04 | Trigger simulated 35% packet loss (force failure for test) | ERROR alert is displayed, no JS popup | Pending |
-| EX3-05 | Press Reconnect Satellite | retryTick increases; LOADING → SUCCESS/ERROR | Pending |
-| EX3-06 | Abort pending request | No fake ERROR banner from AbortError | Pending |
-| EX3-07 | Slow 3G, watch skeleton | 220px loader; layout stable; measure actual CLS | Pending |
-| EX3-08 | React DevTools Components | Correct squadId, view, retryTick | Pending |
-| EX3-09 | React DevTools Profiler | No sustained update loop; commits recorded | Pending |
-| EX3-10 | Keyboard selection, Retry, focus | Controls fully operable; visible, preserved focus | Pending |
-| EX3-11 | Reflow at 320px, 200% zoom, text spacing | No loss of essential content or function | Pending |
-| EX3-12 | axe / manual WCAG 2.2 AA assessment in 3 states | No unresolved applicable issues; evidence recorded | Pending |
-| EX3-13 | `npm run lint` and `npm run build` | Both succeed | Pending |
-| EX3-14 | GitHub remote and commits | Both required commit subjects present; clean Git | Pending |
+| Test ID | Action | Expected outcome | Actual result / source | Status |
+|---|---|---|---|---|
+| EX3-01 | Open app with default squad | TE starts telemetry lifecycle | Student confirms correct | **PASS — reported** |
+| EX3-02 | Select CES | CES telemetry, no stale TE display | Student confirms correct | **PASS — reported** |
+| EX3-03 | Rapid CES → TE → GE | Latest squad wins; stale results ignored | Student confirms correct | **PASS — reported** |
+| EX3-04 | Simulated packet loss | Accessible ERROR; no JS alert | Student confirms correct | **PASS — reported** |
+| EX3-05 | Reconnect Satellite | Retry increments; loading/recovery occurs | Student confirms correct | **PASS — reported** |
+| EX3-06 | Abort pending work | No false ERROR banner from AbortError | Student confirms correct | **PASS — reported** |
+| EX3-07 | Slow 3G, skeleton, CLS | Loading shown; stable layout | Student confirms passing check; CLS number not supplied | **PASS — reported; measurement pending documentation** |
+| EX3-08 | React DevTools Components | Correct selected squad, view and retryTick | Student confirms correct | **PASS — reported** |
+| EX3-09 | React DevTools Profiler | Recorded commits, no update loop | Student confirms correct | **PASS — reported** |
+| EX3-10 | Keyboard, Retry, focus | Controls usable and focus visible | T4 full WCAG verification still pending | **Pending** |
+| EX3-11 | 320px reflow, 200% zoom, spacing | No loss of content or functionality | T4 full WCAG verification still pending | **Pending** |
+| EX3-12 | axe + manual WCAG audit for all states | No unresolved applicable issues | Not yet reported for T4 | **Pending** |
+| EX3-13 | `npm run lint` and `npm run build` | Both succeed in final validation | Final T5 check not yet confirmed | **Pending** |
+| EX3-14 | GitHub push and required commits | Both commit subjects present, working tree clean | Final submission not yet confirmed | **Pending** |
 
-## 5. QA evidence log (update after testing)
+## 5. QA evidence log — T3 verified by student (2026-10-25)
 
 | Area | Evidence / actual observation | Status |
 |---|---|---|
-| 4-state machine | Not tested yet | Pending |
-| 35% simulated loss and deterministic failure case | Not tested yet | Pending |
-| AbortController cleanup / rapid CES → TE → GE | Not tested yet | Pending |
-| Network Slow 3G and cancellation visibility | Not tested yet | Pending |
-| Skeleton height and measured CLS | Not tested yet | Pending |
-| Retry / `role="alert"` / keyboard focus | Not tested yet | Pending |
-| React DevTools Components | Not tested yet | Pending |
-| React DevTools Profiler | Not tested yet | Pending |
-| axe DevTools | Not tested yet | Pending |
-| Manual WCAG 2.2 AA checks | Not tested yet | Pending |
-| Lint and production build | Not tested yet | Pending |
-| GitHub push and both mandatory commits | Not tested yet | Pending |
+| Four-state lifecycle (`IDLE`, `LOADING`, `SUCCESS`, `ERROR`) | Functional checks completed, per student | **PASS — reported** |
+| 35% simulated packet loss / ERROR recovery | Failure and recovery behavior checked, per student; exact random sequence not recorded | **PASS — reported** |
+| AbortController / rapid CES → TE → GE | No stale squad data or spurious abort errors observed, per student | **PASS — reported** |
+| Chrome Network Slow 3G | Loading/skeleton behavior checked, per student; mock uses timer rather than HTTP | **PASS — reported** |
+| Canceled HTTP requests in Network | No real telemetry HTTP fetch in the timer-based mock | **N/A** |
+| Skeleton 220px / CLS | Visual/layout check passed, per student; measured CLS number not supplied | **PASS — reported; numeric evidence pending** |
+| Retry, `role="alert"`, status transitions | Functional checks completed, per student | **PASS — reported** |
+| React DevTools Components | Selected squad, view and retryTick checked, per student | **PASS — reported** |
+| React DevTools Profiler | Update commits recorded; no update loop observed, per student | **PASS — reported** |
+| React Console | No unhandled AbortError or React runtime issue in T3 tests, per student | **PASS — reported** |
+| Manual WCAG 2.2 AA audit across states (T4) | Not yet recorded | **Pending** |
+| axe DevTools scan across states (T4) | Not yet recorded | **Pending** |
+| Final lint and build (T5) | Not yet recorded | **Pending** |
+| GitHub push and both mandatory commits (T5) | Not yet independently verified | **Pending** |
 
-**Evidence policy:** Change `Pending` to `PASS` only for verified outcomes, adding a short observation, date, environment and optionally an evidence screenshot. Use `FAIL` or `BLOCKED` and a corrective commit when checks do not pass. Never invent measurements or screenshot results.
+### Test completion record
+
+- **T3 outcome:** **PASS — student-confirmed on 2026-10-25.**
+- **Evidence limitations:** No screenshots, numeric CLS measurement, automated test report or timestamped Profiler export have been supplied for this update. These can be attached later; do not fabricate them.
+- **Next task:** T4 — WCAG 2.2 AA manual and axe checks. Then T5 — final validation and GitHub submission.
+- **Video:** Not required for Exercise 3.
+
+**Evidence policy:** Distinguish `PASS — reported` from independently audited evidence. Change Pending to PASS only after actually testing. Use FAIL/BLOCKED when needed, and do not invent measurements.
 
 ## 6. References
 
