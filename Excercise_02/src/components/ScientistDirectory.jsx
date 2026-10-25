@@ -1,4 +1,4 @@
-
+import styles from './ScientistDirectory.module.css'
 import { useId, useRef, useState } from 'react'
 import { SMART_PEOPLE } from '../data/smartPeople'
 
@@ -68,7 +68,10 @@ export function ScientistDirectory({
   }
 
   return (
-    <section aria-labelledby={headingId}>
+    <section
+  className={styles.directory}
+  aria-labelledby={headingId}
+>
       <h2 id={headingId}>
         Scientist & Pioneer Directory
       </h2>

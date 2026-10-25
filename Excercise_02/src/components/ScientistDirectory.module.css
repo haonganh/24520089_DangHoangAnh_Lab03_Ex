@@ -1,0 +1,170 @@
+
+.directory {
+  width: 100%;
+  padding: 24px;
+  background: #111827;
+  border: 1px solid #475569;
+  border-radius: 16px;
+  color: #f8fafc;
+}
+
+.directory h2 {
+  margin: 0 0 24px;
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+/* Search, Filter, Sort */
+.directory form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px 16px;
+  margin-bottom: 24px;
+}
+
+.directory form label {
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.directory form label:nth-of-type(1) {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.directory form label:nth-of-type(2) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.directory form label:nth-of-type(3) {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.directory input[type="search"] {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.directory input[type="number"] {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.directory select {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.directory input,
+.directory select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 12px;
+  font: inherit;
+  color: #f8fafc;
+  background: #0f172a;
+  border: 1px solid #94a3b8;
+  border-radius: 8px;
+}
+
+.directory input::placeholder {
+  color: #cbd5e1;
+}
+
+/* Buttons */
+.directory button {
+  min-height: 44px;
+  padding: 10px 16px;
+  font: inherit;
+  font-weight: 600;
+  color: #ffffff;
+  background: #7f1d1d;
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.directory > button {
+  background: #1d4ed8;
+  border-color: #93c5fd;
+}
+
+.directory button:hover {
+  filter: brightness(1.15);
+}
+
+/* WCAG keyboard focus */
+.directory :focus-visible {
+  outline: 3px solid #facc15;
+  outline-offset: 3px;
+}
+
+/* Live status */
+.directory output {
+  display: block;
+  margin: 20px 0;
+  font-weight: 600;
+  color: #86efac;
+}
+
+/* Scientist list */
+.directory ul {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.directory li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+
+.directory li strong {
+  color: #f8fafc;
+}
+
+.directory li button {
+  margin-left: auto;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .directory {
+    padding: 16px;
+  }
+
+  .directory h2 {
+    font-size: 1.25rem;
+  }
+
+  .directory form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .directory form label:not(:first-child) {
+    margin-top: 12px;
+  }
+
+  .directory li {
+    align-items: flex-start;
+  }
+
+  .directory li button {
+    width: 100%;
+    margin-left: 0;
+  }
+}
