@@ -16,7 +16,7 @@
 | T1 | Dataset, four-state lifecycle, AbortController; mandatory feature commit 1 | **Completed — student-reported** |
 | T2 | 220px skeleton, Retry, accessible error UI; mandatory feature commit 2 | **Completed — student-reported** |
 | T3 | React Components, Profiler, rapid switching, AbortError, Slow 3G, CLS | **PASS — student-reported** |
-| T4 | Comprehensive manual WCAG 2.2 AA and automated axe audit | **Pending** |
+| T4 | Comprehensive manual WCAG 2.2 AA and automated axe audit | **PASS — student-reported (2026-10-25)** |
 | T5 | Final lint/build, README, GitHub submission | **Pending** |
 
 **Scope note:** Exercise 3 uses a timer-based simulated telemetry Promise, not a real HTTP telemetry request. Successful cancellation/stale-response tests do **not** imply Chrome Network contains canceled HTTP requests. The student reports the CLS check passed, but has not supplied its numeric measurement; record that number when available. **No video recording is required.**
@@ -179,32 +179,49 @@ git commit -m "test(ex3): document Network cancellation and React DevTools audit
 
 ### T4 — WCAG 2.2 AA manual and automated accessibility audit
 
-**T4.1 — Manual accessibility checks**
+**T4.1 — Manual accessibility checks — COMPLETED (student-reported, 2026-10-25)**
 
-- [ ] **1.3.1 Info and Relationships (A):** semantic section/article, headings, labels, and controls.
-- [ ] **1.4.1 Use of Color (A):** status distinctions have textual labels; not blue/orange color alone.
-- [ ] **1.4.3 Contrast (AA):** normal text ≥ 4.5:1; large text ≥ 3:1.
-- [ ] **1.4.4 Resize Text (AA):** 200% text zoom does not lose content or function.
-- [ ] **1.4.10 Reflow (AA):** 320 CSS px equivalent width does not require horizontal scrolling for ordinary content.
-- [ ] **1.4.12 Text Spacing (AA):** increased line, paragraph, letter and word spacing does not obscure information.
-- [ ] **2.1.1 Keyboard (A):** selection and Retry work with keyboard alone; focus remains usable across state changes.
-- [ ] **2.4.7 Focus Visible (AA)** and **2.4.11 Focus Not Obscured (Minimum) (AA):** focus indicator is visible and not covered.
-- [ ] **2.5.8 Target Size (Minimum) (AA):** interactive targets meet 24×24 CSS px or a valid exception; prefer 44×44 px.
-- [ ] **3.1.1 Language of Page (A):** `<html lang="en">` for English UI; choose `lang="vi"` for a Vietnamese UI.
-- [ ] **4.1.3 Status Messages (AA):** loading/updates announced appropriately, and `role="alert"` exposes genuine errors without forcing focus or spamming announcements.
-- [ ] **2.3.3 Animation from Interactions (AAA, advisory):** not required for AA, but honor `prefers-reduced-motion` as good practice for pulsing skeleton.
+- [x] **1.3.1 Info and Relationships (A):** semantic section/article, headings, labels, and controls.
+- [x] **1.4.1 Use of Color (A):** status distinctions include text, not color alone.
+- [x] **1.4.3 Contrast (AA):** normal text ≥ 4.5:1; large text ≥ 3:1, as applicable. **Pass reported; ratios not provided.**
+- [x] **1.4.4 Resize Text (AA):** 200% text resizing without content or function loss.
+- [x] **1.4.10 Reflow (AA):** 320 CSS px equivalent width without horizontal scrolling for ordinary content.
+- [x] **1.4.12 Text Spacing (AA):** increased line/paragraph/letter/word spacing without loss of content.
+- [x] **2.1.1 Keyboard (A):** squad selection and Retry usable by keyboard; focus remains usable.
+- [x] **2.4.7 Focus Visible (AA)** and **2.4.11 Focus Not Obscured (Minimum) (AA):** focus indicator visible and not obscured.
+- [x] **2.5.8 Target Size (Minimum) (AA):** interactive targets meet 24×24 CSS px or applicable spacing exceptions.
+- [x] **3.1.1 Language of Page (A):** page language matches the UI.
+- [x] **4.1.3 Status Messages (AA):** loading and genuine errors are announced appropriately; `role="alert"` does not create misleading abort alerts.
+- [x] **Reduced motion (advisory):** respect `prefers-reduced-motion` for pulsing skeleton; this is good practice and not a blanket substitute for WCAG success criteria.
 
-**T4.2 — Automated accessibility scan**
+**T4.2 — Automated accessibility scan — COMPLETED (student-reported, 2026-10-25)**
 
-- [ ] Run axe DevTools (or equivalent) against LOADING, SUCCESS, and ERROR states, not only the default screen.
-- [ ] Investigate every finding; manually examine remaining cases. **0 automated violations does not establish total WCAG conformance**.
-- [ ] Record actual contrast, keyboard, axe, reflow and focus outcomes in Section 5.
-- [ ] Commit updated evidence after testing:
+- [x] axe DevTools audit completed for the application's relevant LOADING, SUCCESS, and ERROR experiences, per student confirmation.
+- [x] Student confirms all checked accessibility items passed. **No axe issue counts, raw report, or screenshots were supplied**, so no specific count is asserted here.
+- [x] Record the results in Section 4 and Section 5. This is a report of completed checks, **not independent certification** of full WCAG 2.2 AA conformance.
+- [ ] After replacing this Markdown file in the project, commit updated evidence once (unless already committed):
 
 ```bash
 git add task_decomposition.md
 git commit -m "test(ex3): document WCAG 2.2 AA accessibility audit"
 ```
+
+#### T4 — WCAG 2.2 AA Accessibility QA results (2026-10-25)
+
+| Test | Expected result | Actual result | Status |
+|---|---|---|---|
+| Semantic HTML | Correct semantic structure | Student confirms check passed | **PASS — reported** |
+| Color Contrast | WCAG AA thresholds met | Student confirms check passed; ratios not supplied | **PASS — reported** |
+| Responsive 320px | No horizontal overflow | Student confirms check passed | **PASS — reported** |
+| Zoom 200% | No content loss | Student confirms check passed | **PASS — reported** |
+| Text Spacing | No clipped or missing content | Student confirms check passed | **PASS — reported** |
+| Keyboard Navigation | All controls operable | Student confirms check passed | **PASS — reported** |
+| Focus Visible | Clear unobscured focus indicator | Student confirms check passed | **PASS — reported** |
+| Target Size | Meets WCAG 2.2 AA minimum or exception | Student confirms check passed | **PASS — reported** |
+| Loading Announcement | Accessible loading status | Student confirms check passed | **PASS — reported** |
+| Error Alert | Accessible error announcement | Student confirms check passed | **PASS — reported** |
+| Retry Focus | Focus handled correctly | Student confirms check passed | **PASS — reported** |
+| axe DevTools | No unresolved applicable violations | Student confirms audit passed; raw scan report not provided | **PASS — reported** |
 
 ### T5 — Final integration and GitHub submission (no video)
 
@@ -242,13 +259,13 @@ git commit -m "docs(ex3): finalize telemetry validation and submission"
 | EX3-07 | Slow 3G, skeleton, CLS | Loading shown; stable layout | Student confirms passing check; CLS number not supplied | **PASS — reported; measurement pending documentation** |
 | EX3-08 | React DevTools Components | Correct selected squad, view and retryTick | Student confirms correct | **PASS — reported** |
 | EX3-09 | React DevTools Profiler | Recorded commits, no update loop | Student confirms correct | **PASS — reported** |
-| EX3-10 | Keyboard, Retry, focus | Controls usable and focus visible | T4 full WCAG verification still pending | **Pending** |
-| EX3-11 | 320px reflow, 200% zoom, spacing | No loss of content or functionality | T4 full WCAG verification still pending | **Pending** |
-| EX3-12 | axe + manual WCAG audit for all states | No unresolved applicable issues | Not yet reported for T4 | **Pending** |
+| EX3-10 | Keyboard, Retry, focus | Controls usable and focus visible | Student confirms T4 manual checks passed | **PASS — reported** |
+| EX3-11 | 320px reflow, 200% zoom, spacing | No loss of content or functionality | Student confirms T4 manual checks passed | **PASS — reported** |
+| EX3-12 | axe + manual WCAG audit for all states | No unresolved applicable issues | Student confirms completion; detailed report not supplied | **PASS — reported** |
 | EX3-13 | `npm run lint` and `npm run build` | Both succeed in final validation | Final T5 check not yet confirmed | **Pending** |
 | EX3-14 | GitHub push and required commits | Both commit subjects present, working tree clean | Final submission not yet confirmed | **Pending** |
 
-## 5. QA evidence log — T3 verified by student (2026-10-25)
+## 5. QA evidence log — T3 and T4 verified by student (2026-10-25)
 
 | Area | Evidence / actual observation | Status |
 |---|---|---|
@@ -262,16 +279,17 @@ git commit -m "docs(ex3): finalize telemetry validation and submission"
 | React DevTools Components | Selected squad, view and retryTick checked, per student | **PASS — reported** |
 | React DevTools Profiler | Update commits recorded; no update loop observed, per student | **PASS — reported** |
 | React Console | No unhandled AbortError or React runtime issue in T3 tests, per student | **PASS — reported** |
-| Manual WCAG 2.2 AA audit across states (T4) | Not yet recorded | **Pending** |
-| axe DevTools scan across states (T4) | Not yet recorded | **Pending** |
+| Manual WCAG 2.2 AA audit across states (T4) | Completed per student confirmation; detailed measurements not supplied | **PASS — reported** |
+| axe DevTools scan across states (T4) | Completed per student confirmation; raw results not supplied | **PASS — reported** |
 | Final lint and build (T5) | Not yet recorded | **Pending** |
 | GitHub push and both mandatory commits (T5) | Not yet independently verified | **Pending** |
 
 ### Test completion record
 
 - **T3 outcome:** **PASS — student-confirmed on 2026-10-25.**
-- **Evidence limitations:** No screenshots, numeric CLS measurement, automated test report or timestamped Profiler export have been supplied for this update. These can be attached later; do not fabricate them.
-- **Next task:** T4 — WCAG 2.2 AA manual and axe checks. Then T5 — final validation and GitHub submission.
+- **T4 outcome:** **PASS — student-confirmed on 2026-10-25** (manual accessibility checks and axe DevTools).
+- **Evidence limitations:** No screenshots, numeric CLS measurement, contrast ratios, axe raw scan report or timestamped Profiler export have been supplied for this update. These can be attached later; do not fabricate them.
+- **Next task:** T5 — final lint/build, README, GitHub submission. T4 checks do not need repeating unless the UI changes.
 - **Video:** Not required for Exercise 3.
 
 **Evidence policy:** Distinguish `PASS — reported` from independently audited evidence. Change Pending to PASS only after actually testing. Use FAIL/BLOCKED when needed, and do not invent measurements.
