@@ -5,7 +5,24 @@
 > **Student:** Đặng Hoàng Anh  
 > **Accessibility target:** WCAG 2.2 Level AA  
 > **Estimated in-class sprint:** 45 minutes; allow extra time for testing and recording  
-> **Status:** Planning document — change `Pending` to `Pass` only after actually testing.
+> **Progress as of 2026-10-25:** T0–T3 reported complete; T4.1 UI implemented; **T4.2 Step 3 (React Profiler) and Step 4 (axe DevTools) completed successfully**. Manual WCAG review, reference-code alignment, video, and final submission remain open.
+> **Evidence integrity:** A `Pass` marked *student-reported* means the student confirmed the test; no numerical axe findings or full WCAG conformance is inferred without a saved report.
+
+## Current task status
+
+| Task | Description | Current status |
+|---|---|---|
+| T0 | Create planning files and React/Vite project | Complete — student-reported |
+| T1 | Normalize seven records and stable IDs | Complete — student-reported |
+| T2 | Case-insensitive search, numeric IQ filter, and `toSorted()` | Complete — student-reported; slide alignment to check |
+| T3 | Delete, Reset, live status, and focus management | Complete — student-reported |
+| T4.1 | Responsive UI with accessible controls | Implemented; 320px/manual audit still to be confirmed |
+| T4.2 — Step 3 | React DevTools Profiler | **PASS — 1/1 recorded commit for the one-character action**, per captured screenshot |
+| T4.2 — Step 4 | axe DevTools scan | **PASS — student confirmed successful scan**; actual findings count and report screenshot not supplied |
+| T4.2 — manual | WCAG 2.2 AA manual test matrix | Pending evidence for individual criteria |
+| T4.3 | Align reference defaults and age sorting before filming | Pending review/fix |
+| T5.1 | Record and review the demo video | Not started |
+| T5.2 | Lint, build, GitHub validation, submission | Not started |
 
 ## 1. Objective and non-negotiable contracts
 
@@ -13,7 +30,7 @@ Transform the original static `smartPeople` list into an interactive React direc
 
 1. **Case-insensitive name search** (trim whitespace).
 2. **Minimum IQ numeric filter**, reading the `<input type="number">` with `event.target.valueAsNumber` and handling `NaN`.
-3. **Sorting by descending IQ or ascending age**, using ES2023 `toSorted()` without mutating state.
+3. **Sorting by descending IQ or ascending age according to the instructor's reference**, using ES2023 `toSorted()` without mutating state. The implementation previously demonstrated an `age-desc` option; see T4.3 before the final recording.
 4. **Delete an individual and Reset the directory**, without unstable React keys or lost keyboard focus.
 5. **An announced result count** using `<output role="status" aria-live="polite">`.
 
@@ -160,7 +177,7 @@ const visible = people
   )
 ```
 
-**Check:** Searching `einSTEIN` finds Einstein; clearing the query restores applicable results; IQ filtering remains numeric; switching IQ/age changes order; the `SMART_PEOPLE` source array remains unmodified. Test at least one **zero-results** combination. Lower minimum IQ to `0` to display the student record.
+**Check:** Searching `einSTEIN` finds Einstein; clearing the query restores applicable results; IQ filtering remains numeric; switching IQ/age changes order; the `SMART_PEOPLE` source array remains unmodified. Test at least one **zero-results** combination. Lower minimum IQ to `0` to display the student record. **As built during T2–T4:** the app used `minIq = 0` by default and `age-desc`. These are real implementation differences from the instructor's `160` and `age-asc` reference and must not be silently marked compliant; see T4.3.
 
 **Commit — exact instructor-mandated message:**
 
@@ -220,16 +237,47 @@ git commit -m "style(ex2): add responsive WCAG-conscious directory UI"
 
 ### T4.2 — Functional, React DevTools, and WCAG QA evidence
 
-**Do:** Complete the matrices in Sections 5 and 6 below, including a React DevTools **Components** inspection and **Profiler** recording; run axe DevTools and manual WCAG checks. Record actual results in `evidence/README.md` and Section 9.
+**Completed on 2026-10-25 (as reported and shown in this conversation):**
 
-**Check:** Do not mark `Pass` solely because a procedure was written; attach evidence such as a screenshot filename, Profiler observation, or test log.
+- **Step 3 — React DevTools Profiler: PASS.** The recorded session displayed `1 / 1` commit, with `ScientistDirectory` around **6 ms** of an approximately **7 ms** update and **Immediate** priority. The student confirmed the one-character-input test. This supports **one recorded commit for that action**, *not* a blanket claim that React invoked the render function exactly once.
+- **Step 4 — axe DevTools: PASS (student-reported).** The student stated the scan completed successfully. **Do not invent `0 violations`:** the scan's exact critical/serious/moderate/minor counts and report screenshot have not been supplied. Save the real report before submission.
+- **Components panel:** Four independent state values and the seven-person dataset were inspected in earlier steps (student-confirmed). `visible` is computed, not stored as a fifth state.
 
-**Commit:**
+**Still required:** Finish the **manual WCAG 2.2 AA criteria in Section 6**, note any failures and fixes, and copy/screenshoot results into the project `evidence/` folder. A clean axe scan alone is insufficient for a WCAG 2.2 AA conformance claim.
+
+**Suggested evidence paths** (only list these as files after saving them): `evidence/react-profiler.png`, `evidence/axe-results.png`, and `evidence/README.md`. The Profiler screenshot was supplied in chat but is not automatically committed to the repository.
+
+**Commit after the evidence log has been updated:**
 
 ```powershell
-git add evidence/README.md task_decomposition.md
+git add task_decomposition.md
+# Add the following only if the files actually exist:
+# git add evidence/README.md evidence/react-profiler.png evidence/axe-results.png
 git commit -m "test(ex2): document functional React Profiler and WCAG checks"
 ```
+
+If this test commit already exists, do **not** create a duplicate; commit only newly changed evidence with a distinct message.
+
+### T4.3 — Reference contract alignment before filming (pending)
+
+**Why:** The slide reference initializes `minIq` to **160** and sorts age **ascending**, while the completed demonstration used `minIq = 0` and `age-desc` (oldest first). The actual behavior is functional, but it is **not the same as the instructor's reference snippet**.
+
+**Do (if the slide's exact code semantics are required):**
+
+1. In `ScientistDirectory.jsx`, initialize `minIq` to `160`; in `handleReset`, restore `160` too.
+2. Replace the age option value with `age-asc`, label it `Age (Youngest First)`, and compare `a.age - b.age` in `toSorted()`.
+3. Keep `valueAsNumber`, four `useState` values, derived `visible`, stable IDs, and keyboard-focus preservation unchanged.
+4. With the sample IQ 100, opening/resetting the app should show **6 of 7** people; setting Minimum IQ to `0` must reveal **Đặng Hoàng Anh**.
+5. Re-test search, filtering, sorting, Reset and the one-character Profiler action. Record any changes in Sections 5 and 9.
+
+**Commit only if a code change is made:**
+
+```powershell
+git add src/components/ScientistDirectory.jsx
+git commit -m "fix(ex2): align default IQ and age sort with slide reference"
+```
+
+**Note:** If the instructor explicitly permits `minIq = 0` and `age-desc`, keep the implementation but document that permission in the submission instead of claiming the reference is identical.
 
 ### T5.1 — Record the Exercise 2 demonstration video
 
@@ -262,19 +310,19 @@ git status
 
 | ID | Action | Expected | Result | Evidence |
 |---|---|---|---|---|
-| F01 | Open page at initial defaults | 6 of 7 displayed at `minIq=160`; demo student's IQ 100 excluded | Pending | — |
-| F02 | Set `Min IQ = 0` | All 7 people appear, including Đặng Hoàng Anh | Pending | — |
-| F03 | Enter `einSTEIN` | Einstein is matched despite capitalization | Pending | — |
-| F04 | Search with leading/trailing spaces | Trimmed match works | Pending | — |
-| F05 | Set `Min IQ = 205` and clear name query | Only Goethe (210) and Einstein (205) remain | Pending | — |
-| F06 | Clear numeric input | `valueAsNumber`'s `NaN` is handled; filter acts as 0 | Pending | — |
-| F07 | Sort by IQ descending | Visible records are in non-increasing IQ order | Pending | — |
-| F08 | Sort by age ascending | Visible records are in non-decreasing age order | Pending | — |
-| F09 | Enter a search with no matches | Empty state appears; live count says 0 | Pending | — |
-| F10 | Delete Johann Goethe | Goethe disappears, live count decrements, next/previous/reset control holds focus | Pending | — |
-| F11 | Click Reset | Deleted people restored and controls return to declared defaults | Pending | — |
-| F12 | Keyboard-only: Tab, Shift+Tab, Enter, Space | All inputs, select, delete and reset can be operated with visible focus | Pending | — |
-| F13 | Check source data after sort/delete/reset | `SMART_PEOPLE` unchanged and every rendered list key remains a stable ID | Pending | — |
+| F01 | Open page at initial defaults | **Slide:** 6 of 7 at `minIq=160` | **Needs alignment:** current demo showed 7 at `minIq=0` | Screenshot / T4.3 |
+| F02 | Set `Min IQ = 0` | All 7 people appear, including Đặng Hoàng Anh | Pass — visible in browser screenshot | Earlier T2 / T4 screenshots |
+| F03 | Enter `einSTEIN` | Einstein is matched despite capitalization | Pass — student-reported T2 test | T2 validation |
+| F04 | Search with leading/trailing spaces | Trimmed match works | Not separately documented | Re-test before video |
+| F05 | Set `Min IQ = 205` and clear name query | Only Goethe (210) and Einstein (205) remain | Not separately documented | Re-test before video |
+| F06 | Clear numeric input | `valueAsNumber`'s `NaN` is handled; filter acts as 0 | Not separately documented | Re-test before video |
+| F07 | Sort by IQ descending | Visible records are in non-increasing IQ order | Pass — screenshot showed descending IQ | Browser screenshot |
+| F08 | Sort by age ascending | Visible records are in non-decreasing age order | **Needs alignment:** implementation currently uses `age-desc` | T4.3 change/re-test |
+| F09 | Enter a search with no matches | Empty state appears; live count says 0 | Pass — student-reported T2/T3 test | T2/T3 validation |
+| F10 | Delete Johann Goethe | Goethe disappears, live count decrements, next/previous/reset control holds focus | Pass — student-reported T3 test | T3 validation; capture focus evidence |
+| F11 | Click Reset | Deleted people restored and controls return to declared defaults | Pass — student-reported for existing defaults; retest after T4.3 | T3 validation |
+| F12 | Keyboard-only: Tab, Shift+Tab, Enter, Space | All inputs, select, delete and reset can be operated with visible focus | Pending — complete manual keyboard audit | Capture during T5 |
+| F13 | Check source data after sort/delete/reset | `SMART_PEOPLE` unchanged and every rendered list key remains a stable ID | Stable IDs inspected; source immutability not separately documented | React DevTools / source inspection |
 
 ## 6. React Developer Tools, Profiler, and WCAG 2.2 AA
 
@@ -285,6 +333,12 @@ git status
 3. Verify displayed results correspond to these states. `visible` **must not appear as an independent `useState` hook**.
 4. Inspect `<li>` keys if exposed; verify `sp-1`, `sp-2`, etc., not array indices. Filter and delete while observing remaining items.
 5. Confirm that keyboard focus is preserved after the selected Delete button disappears; use the Elements panel or `document.activeElement` if needed.
+
+### Verified React DevTools status (2026-10-25)
+
+- **Components:** `App → ScientistDirectory`; the student inspected `people`, `query`, `minIq`, and `sortBy`. The initial `people` array contains 7 records with stable IDs, including `sp-7` for Đặng Hoàng Anh.
+- **Profiler:** **PASS** — captured **1 / 1 commit** after the tested interaction. The Profiler screenshot displays `ScientistDirectory (6ms of 7ms)` and **Immediate** priority. The recorded screenshot is available in the conversation; copy it to the repository if a screenshot artifact is required for submission.
+- **axe DevTools:** **PASS per student's explicit confirmation** of Step 4. Findings totals and screenshot still need to be saved; never substitute invented values.
 
 ### React Developer Tools — Profiler
 
@@ -313,7 +367,7 @@ git status
 | 3.3.2 Labels or Instructions | A | Search, IQ and sort controls have meaningful labels | Pending |
 | 4.1.2 Name, Role, Value | A | Inputs/buttons have correct accessible names and states | Pending |
 | 4.1.3 Status Messages | AA | Result count updates announced without stealing focus | Pending |
-| Automated axe DevTools scan | Supporting audit | Run scan, investigate every finding; record actual number | Pending |
+| Automated axe DevTools scan | Supporting audit | Scan successfully completed (student-reported); log actual findings and screenshot before submitting | Pass — reported; count not provided |
 
 Reference: <https://www.w3.org/TR/WCAG22/>. An axe scan with zero automated findings **does not establish full WCAG conformance** without manual testing.
 
@@ -324,10 +378,10 @@ Reference: <https://www.w3.org/TR/WCAG22/>. An axe scan with zero automated find
 | Sequence | Show on screen | What must be visible / explained |
 |---|---|---|
 | 01 — Introduction | Running site + title | “Exercise 2 — Interactive Scientist & Pioneer Directory”; student name |
-| 02 — Dataset | Initial list and 160 IQ threshold | Show 6 displayed, then change IQ minimum to 0 and show the 7th student record; IQ 100 is demo data |
+| 02 — Dataset | Initial list and reference 160 IQ threshold | **After T4.3 alignment:** show 6 displayed, then change IQ minimum to 0 and show the 7th student record; IQ 100 is demo data |
 | 03 — Name search | Type `einSTEIN`, then clear | Case-insensitive search and reactive result count |
 | 04 — IQ filter | Enter `205`, then clear numeric input | Numeric filtering and blank-input fallback |
-| 05 — Sorting | Toggle IQ descending ↔ Age ascending | Correct ordering; original dataset not mutated |
+| 05 — Sorting | Toggle IQ descending ↔ Age ascending | Show `age-asc` **after T4.3 alignment**; correct ordering and immutable dataset |
 | 06 — Empty state | Type an impossible name | “Found 0 pioneers”, usable empty-state message |
 | 07 — Delete & focus | Restore query/filter, keyboard-activate Delete on Goethe | Goethe removed, counter changes, remaining items keep stable keys, keyboard focus remains meaningful |
 | 08 — Reset | Activate Reset | Original records/controls restored |
@@ -350,33 +404,44 @@ feat(ex2): add delete/reset & live status
 
 Use `git log --oneline --reverse` to verify their chronological order. Setup, documentation, styling and testing commits are allowed **in addition**, and must not replace the three feature commits.
 
-- [ ] Both Markdown files committed and pushed.
-- [ ] Student record is included and its IQ is honestly marked as a demonstration value until replaced.
-- [ ] Four interactive features demonstrated.
-- [ ] No `useEffect` is used for filtering/sorting; no derived `visible` state.
-- [ ] Labels + `useId()` correctly wired.
-- [ ] Result count announced via polite status.
-- [ ] Delete does not lose keyboard focus; Reset works.
-- [ ] `toSorted()` does not mutate `SMART_PEOPLE` or `people`.
-- [ ] React Developer Tools **Components** and **Profiler** checked and recorded.
-- [ ] Functional and WCAG test evidence accurately logged.
+- [x] Both Markdown files added and pushed earlier — student-reported; verify remote again at T5.2.
+- [x] Student record is included; IQ `100` remains explicitly marked as demo data.
+- [x] Search, IQ filter, sort, Delete and Reset tested during T2/T3 — student-reported; final video still pending.
+- [x] Derived `visible` is calculated without `useEffect` in the implemented code.
+- [x] Labels + `useId()` implemented; final manual accessibility check remains open.
+- [x] Live result count implemented with `<output role="status" aria-live="polite">`; manual announcement check remains open.
+- [x] Delete/Reset behavior and focus handling tested — student-reported; capture focus evidence in video.
+- [x] `toSorted()` used rather than mutating `.sort()`; separate source immutability test is still advisable.
+- [x] React Developer Tools **Components** checked; **Profiler recorded 1 / 1 commit**.
+- [ ] Profiler and axe checks logged; finish individual manual WCAG results, exact axe findings, and evidence screenshots.
 - [ ] `npm run lint` and `npm run build` pass.
-- [ ] Demo video watched end-to-end; submission location/link recorded.
+- [ ] Demo video has **not yet been recorded/reviewed**; submission location/link must be added.
 - [ ] GitHub contains all three mandatory feature commits and `git status` is clean.
 
-## 9. QA evidence log — complete after testing
+## 9. QA evidence log — updated 2026-10-25
 
-| Checkpoint | Expected | Actual / file reference | Status |
+| Checkpoint | Expected | Actual / evidence | Status |
 |---|---|---|---|
-| T1 — Data schema | Seven stable unique IDs; numeric age and IQ | Not tested | Pending |
-| T2 — Search/filter/sort | Functional cases F01–F09 pass | Not tested | Pending |
-| T3 — Delete/Reset/focus | F10–F13 pass | Not tested | Pending |
-| T4 — React Components | Expected independent state and stable keys | Not tested | Pending |
-| T4 — React Profiler | One expected committed update for one typed character, subject to actual environment | Not tested | Pending |
-| T4 — WCAG manual | Applicable AA criteria pass | Not tested | Pending |
-| T4 — axe scan | Findings resolved and actual count recorded | Not tested | Pending |
-| T5 — Video | Playable, demonstrates every required scene | Not recorded | Pending |
-| T5 — Lint / build | Both commands pass | Not run | Pending |
-| T5 — GitHub | Mandatory commits present in correct sequence | Not verified | Pending |
+| T0 — Setup | React/Vite, planning docs, Git initialized | Completed during guided steps | Complete — student-reported |
+| T1 — Data schema | Seven stable IDs and numeric age/IQ | 7 records visible; `sp-7` is student demo record | Pass — student-reported |
+| T2 — Search/filter/sort | Case-insensitive search, numeric minimum and immutable sort | Functionality tested, but default `0` and `age-desc` differ from reference | Pass for tested functions; **reference alignment pending** |
+| T3 — Delete/Reset/focus | Immutable removal, counter and useful keyboard focus | Completed in guided T3 test | Pass — student-reported |
+| T4.1 — Responsive styling | Clear form layout, reflow and keyboard-visible focus | CSS and 375px layout visible in browser screenshots | Implemented; **320px/manual audit pending** |
+| T4.2 — React Components | Four independent states and stable list identity | `App → ScientistDirectory`; states inspected earlier | Pass — student-reported |
+| **T4.2 — React Profiler (Step 3)** | One committed update after the one-character interaction | **1 / 1 commit**; `ScientistDirectory` ~6ms / ~7ms update; screenshot captured in conversation | **PASS** |
+| **T4.2 — axe scan (Step 4)** | Scan runs and findings are evaluated | Student confirmed successful scan; **violation counts and export/screenshot not provided** | **PASS — student-reported**, evidence details pending |
+| T4.2 — Manual WCAG 2.2 AA | Applicable criteria documented in Section 6 | No complete criterion-by-criterion audit yet supplied | Pending |
+| T4.3 — Reference alignment | `minIq=160`, age ascending, Reset matches reference | Implementation currently uses `minIq=0`, `age-desc` | Pending review/fix |
+| T5.1 — Video | `ex2_demo.mp4` contains all storyboard scenes | Not recorded | Pending |
+| T5.2 — Lint/build | `npm run lint` and `npm run build` succeed | Final run results not supplied | Pending |
+| T5.2 — GitHub | Three mandatory commits in correct sequence, clean working tree | Feature tasks reportedly committed and pushed; final remote audit not supplied | Pending final check |
 
-**Completion rule:** Never change `Pending` to `Pass` without performing the test; when a test fails, record `Fail`, its reproduction steps, and the fix/ret-test result.
+### Immediate next actions (do these before submission)
+
+1. **Save evidence:** Copy the React Profiler screenshot shown in chat into the project as `evidence/react-profiler.png`. Save a real axe result screenshot/report as `evidence/axe-results.png`, including counts if visible. If the scans showed issues, fix them and re-test; an unreported count cannot be assumed to be zero.
+2. **Finish the manual checklist:** Run applicable 320 CSS px reflow, 200% text resize, contrast, keyboard-only interaction, focus and live-announcement checks from Section 6; update individual results truthfully.
+3. **Resolve T4.3:** Match the slide's `minIq=160` and `age-asc` if strict reference behavior is required; re-run the relevant tests. This does not invalidate the earlier Profiler screenshot but the final app should be tested after changes.
+4. **Commit the updated QA Markdown:** From inside `Excercise_02`, use `git add task_decomposition.md` and a descriptive `git commit -m "docs(ex2): update profiler and axe QA results"`. Do not repeat an existing commit unnecessarily.
+5. **Proceed to T5:** Record the video, verify the recording, run `npm run lint` / `npm run build`, and push the final commits to the existing `main` branch.
+
+**Completion rule:** A reported axe success is evidence that the scan ran, **not** independent certification of the entire page against WCAG 2.2 AA. Never fabricate test counts, screenshots, Git verification, or completion of the video.
